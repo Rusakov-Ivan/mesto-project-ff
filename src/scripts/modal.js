@@ -9,7 +9,6 @@ function openPopup(popup) {
 function closePopup(popup) {
   popup.classList.remove("popup_is-opened");
   document.removeEventListener("keydown", handleEscKeyUp);
-  document.removeEventListener;
 }
 //---Закрытие попап окна кнопкой esc---\\
 const handleEscKeyUp = (evt) => {
