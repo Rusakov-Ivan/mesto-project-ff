@@ -1,6 +1,6 @@
 import "../pages/index.css";
 import { initialCards } from "./cards.js";
-import { createElementCard } from "./card.js";
+import { createElementCard, deleteElementCard, putLike } from "./card.js";
 import { openPopup, closePopup, handleEscKeyUp } from "./modal.js";
 
 const cardList = document.querySelector(".places__list");
@@ -42,7 +42,11 @@ formEdit.addEventListener("submit", handleEditFormSubmit);
 function handleCardFormSubmit(evt) {
   const name = inputCardName.value;
   const link = inputCardLink.value;
-  const newCard = createElementCard({ name, link });
+  const newCard = createElementCard
+  ({ name: name,
+     link: link,
+     alt: name
+   }, deleteElementCard, putLike, openImagePopup);
 
   addCard(newCard);
   formAddCard.reset();
@@ -70,10 +74,10 @@ profileAddButton.addEventListener("click", () => {
 });
 
 //---Открытие попап окна картинки---\\
-export function openImagePopup(cardImg) {
-  imageElement.src = cardImg.link;
-  imageElement.alt = cardImg.name;
-  imageCaption.textContent = cardImg.name;
+ function openImagePopup(cardData) {
+  imageElement.src = cardData.link;
+  imageElement.alt = cardData.name;
+  imageCaption.textContent = cardData.name;
   openPopup(popupImage);
 }
 
@@ -119,7 +123,7 @@ function setListenersPopupImage(popupElement) {
 }
 //---Вывод карточек на страницу---\\
 initialCards.forEach((data) => {
-  const newCard = createElementCard(data);
+  const newCard = createElementCard(data, deleteElementCard, putLike, openImagePopup);
   cardList.append(newCard);
 });
 
