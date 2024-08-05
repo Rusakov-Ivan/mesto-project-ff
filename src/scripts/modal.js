@@ -3,7 +3,8 @@ export { openPopup, closePopup, handleEscKeyUp };
 //---Функция открытия попап окна---\\
 function openPopup(popup) {
   popup.classList.add("popup_is-opened");
-  document.addEventListener("keyup", handleEscKeyUp);
+  document.addEventListener("keydown", handleEscKeyUp);
+
 }
 //---Функция закрытия попап окна---\\
 function closePopup(popup) {
