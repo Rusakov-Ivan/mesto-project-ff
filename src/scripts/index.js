@@ -22,7 +22,7 @@ const formAddCard = popupAddNewCard.querySelector(".popup__form");
 const inputCardName = formAddCard.querySelector(".popup__input_type_card-name");
 const inputCardLink = formAddCard.querySelector(".popup__input_type_url");
 
-//---Открытая карточка---\\\
+//---Открытая карточка---\\
 const imageElement = popupImage.querySelector(".popup__image");
 const imageCaption = popupImage.querySelector(".popup__caption");
 
@@ -127,6 +127,53 @@ initialCards.forEach((data) => {
   cardList.append(newCard);
 });
 
+const showInputError = (formElement, inputElement, errorMessage, inputError, errorClass) => {
+const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+inputElement.classList.add(inputError);
+errorElement.textContent = errorMessage;
+errorElement.classList.add(errorClass);
+};
+
+const hideInputError = (formElement, inputElement, inputError, errorClass) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove(inputError);
+  errorElement.textContent = "";
+  errorElement.classList.remove(errorClass);
+};
+
+const isValid = (formElement, inputElement, inputError, errorClass) => {
+if(!inputElement.validity.valid){
+showInputError(formElement, inputElement, inputElement.validationMessage, inputError, errorClass);
+} else {
+  hideInputError(formElement, inputElement, inputError, errorClass);
+}
+}
+
+const setEventListenersForm = (formElement, validationConfig, inputError, errorClass) => {
+ const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
+ inputList.forEach((inputElement) => {
+  inputElement.addEventListener("input", () => {
+    isValid(formElement, inputElement, inputError, errorClass)
+  })
+ })
+}
+
+const enableValidation = (validationConfig) => {
+  const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
+  formList.forEach((formElement) => {
+    setEventListenersForm(formElement, validationConfig)
+  })
+}
+
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  inputErrorClass: 'popup__input_type_error',
+  errorClassActive: 'popup__input-error_active',
+});
+
+
 setListenersPopupEditing(popupEditProfile);
 setListenersPopupAdd(popupAddNewCard);
 setListenersPopupImage(popupImage);
+
