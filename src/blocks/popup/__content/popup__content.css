@@ -1,3 +1,7 @@
+.popup__content:last-of-type {
+  min-height: 0;
+}
+
 .popup__content {
   max-width: 430px;
   width: 100%;
