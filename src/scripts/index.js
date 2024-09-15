@@ -25,7 +25,7 @@ const profileName = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__description");
 
 //---Форма обновления аватара---\\
-const formAvatar = document.querySelector(".popup__form");
+const formAvatar = popupAvatar.querySelector(".popup__form");
 const inputAvatar = formAvatar.querySelector(".popup__input_avatar_url");
 
 //---Форма редактирования профиля---\\
@@ -133,7 +133,8 @@ formAddCard.addEventListener("submit", handleCardFormSubmit);
 const handleDeleteCard = (cardItem, cardId) => {
   deleteCard(cardId).then(() => {
     deleteElementCard(cardItem);
-  });
+  })
+  .catch((error) => console.log("Неудалось удалить карточку:", error))
 };
 
 //---Функцтя работы лайка---\\
